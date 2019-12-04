@@ -49,7 +49,7 @@ const ModalWrapper = p => {
       const self = modal.current
       polyfill.default.registerDialog(self)
     })
-    .catch(err => console.warn(`dialog-polyfill was not be loaded`))
+    .catch(err => console.warn(`dialog-polyfill was not loaded`))
     .finally(() => setReady(true))
   }, [])
   return <ModalBase {...p} ready={ready} ref={modal} />
