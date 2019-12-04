@@ -13,8 +13,8 @@ const ModalBase = forwardRef((p, modal) => {
   } = p
   useEffect(() => {
     const self = modal.current
-    if (!self || !ready) return
     setCanceled(false)
+    if (!self || !ready || self.open === open) return
     const show = useAsModal ? () => self.showModal() : () => self.show()
     const close = () => self.close()
     const action = open ? show : close
