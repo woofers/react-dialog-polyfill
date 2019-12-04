@@ -4,6 +4,23 @@
 
 [![img](https://github.com/woofers/react-dialog-polyfill/workflows/build/badge.svg)](https://github.com/woofers/react-dialog-polyfill/actions) [![img](https://david-dm.org/woofers/react-dialog-polyfill.svg)](https://www.npmjs.com/package/react-dialog-polyfill) [![img](https://badge.fury.io/js/react-dialog-polyfill.svg)](https://www.npmjs.com/package/react-dialog-polyfill) [![img](https://img.shields.io/npm/dt/react-dialog-polyfill.svg)](https://www.npmjs.com/package/react-dialog-polyfill) [![img](https://img.shields.io/npm/l/react-dialog-polyfill.svg)](https://github.com/woofers/react-dialog-polyfill/blob/master/LICENSE)
 
+`<dialog>` element bundled with polyfill for React
+
+
+# Why?
+
+While many other more feature-rich React modal components exists, `react-dialog-polyfill`
+aims to be a simple binding of the native `<dialog>` element for React.
+
+Differences from most of the existing components:
+
+-   Native browser support in browsers like Chrome and Opera
+-   Polyfill for un-supported browsers
+-   Avoids using `React.createPortal`, allowing SSR in natively supported browsers
+-   Dialog always will display in-front of other elements regardless of `z-index`
+-   Selected info from dialog can be returned via `<form>` element
+-   Well suited for Electron apps
+
 
 # Installation
 
@@ -61,7 +78,7 @@ export default App
 
 Simply add the desired component to the React application using JSX.
 
-The Modal component will block interaction with other elements when it is open while the Dialog component will not.
+The Modal component will block interaction with other elements when it is open, while the Dialog component will not.
 
 
 ## Props
