@@ -1,0 +1,64 @@
+import React, { forwardRef, createRef, useEffect, useState } from 'react'
+
+const ModalBase = forwardRef((p, modal) => {
+  const {
+    children,
+    open,
+    ready,
+    onCancel,
+    onClose,
+    setCanceled,
+    useAsModal,
+    ...rest
+  } = p
+  useEffect(() => {
+    const self = modal.current
+    if (!self || !ready) return
+    setCanceled(false)
+    const show = useAsModal ? () => self.showModal() : () => self.show()
+    const close = () => self.close()
+    const action = open ? show : close
+    action()
+  }, [ready, open])
+  const onCancelWrap = e => {
+    setCanceled(true)
+    onCancel(e, modal.current)
+  }
+  const onCloseWrap = e => {
+    setCanceled(false)
+    onClose(e, modal.current)
+  }
+  return (
+    <dialog {...rest}
+     ref={modal}
+     onCancel={onCancelWrap}
+     onClose={onCloseWrap}
+    >
+      {children}
+    </dialog>
+  )
+})
+
+ModalBase.defaultProps = {
+  onClose: () => {},
+  onCancel: () => {},
+  setCanceled: () => {}
+}
+
+const ModalWrapper = p => {
+  const modal = createRef()
+  const [ready, setReady] = useState()
+  useEffect(() => {
+    import('dialog-polyfill').then(polyfill => {
+      const self = modal.current
+      polyfill.default.registerDialog(self)
+    })
+    .catch(err => console.warn(`dialog-polyfill was not be loaded`))
+    .finally(() => setReady(true))
+  }, [])
+  return <ModalBase {...p} ready={ready} ref={modal} />
+}
+
+export const Modal = p => <ModalWrapper {...p} useAsModal={true} />
+
+export const Dialog = p => <ModalWrapper {...p} useAsModal={false} />

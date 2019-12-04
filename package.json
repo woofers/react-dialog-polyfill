@@ -1,0 +1,57 @@
+{
+  "name": "react-dialog-polyfill",
+  "version": "1.0.0",
+  "description": "<dialog> element bundled with polyfill for React",
+  "main": "lib/react-dialog-polyfill.js",
+  "src": "src/modal.js",
+  "files": [
+    "lib",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "yarn watch",
+    "build": "NODE_ENV=production webpack",
+    "watch": "NODE_ENV=development webpack --watch",
+    "clean": "rimraf lib",
+    "test": "echo \"No tests \" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woofers/react-dialog-polyfill.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "component"
+  ],
+  "author": "Jaxson Van Doorn <jaxson.vandoorn@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/woofers/react-dialog-polyfill/issues"
+  },
+  "homepage": "https://github.com/woofers/react-dialog-polyfill#readme",
+  "peerDependencies": {
+    "react": "^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.7.2",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "peer-deps-externals-webpack-plugin": "^1.0.4",
+    "rimraf": "^3.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.5",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "dialog-polyfill": "^0.5.0"
+  }
+}

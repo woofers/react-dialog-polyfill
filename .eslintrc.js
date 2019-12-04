@@ -1,0 +1,9 @@
+module.exports = {
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error"
+  },
+  "parser": "babel-eslint"
+}
