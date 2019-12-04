@@ -19,6 +19,7 @@ const ModalBase = forwardRef((p, modal) => {
     action()
   }, [ready, open])
   const onCancelWrap = e => {
+    e.preventDefault()
     onCancel(e, modal.current)
   }
   const onCloseWrap = e => {
