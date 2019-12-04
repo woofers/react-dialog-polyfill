@@ -7,13 +7,11 @@ const ModalBase = forwardRef((p, modal) => {
     ready,
     onCancel,
     onClose,
-    setCanceled,
     useAsModal,
     ...rest
   } = p
   useEffect(() => {
     const self = modal.current
-    setCanceled(false)
     if (!self || !ready || self.open === open) return
     const show = useAsModal ? () => self.showModal() : () => self.show()
     const close = () => self.close()
@@ -21,11 +19,9 @@ const ModalBase = forwardRef((p, modal) => {
     action()
   }, [ready, open])
   const onCancelWrap = e => {
-    setCanceled(true)
     onCancel(e, modal.current)
   }
   const onCloseWrap = e => {
-    setCanceled(false)
     onClose(e, modal.current)
   }
   return (
@@ -41,8 +37,7 @@ const ModalBase = forwardRef((p, modal) => {
 
 ModalBase.defaultProps = {
   onClose: () => {},
-  onCancel: () => {},
-  setCanceled: () => {}
+  onCancel: () => {}
 }
 
 const ModalWrapper = p => {
