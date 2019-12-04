@@ -17,7 +17,7 @@ const ModalBase = forwardRef((p, modal) => {
     const close = () => self.close()
     const action = open ? show : close
     action()
-  }, [ready, open])
+  }, [ready, open, modal, useAsModal])
   const onCancelWrap = e => {
     e.preventDefault()
     onCancel(e, modal.current)
@@ -45,13 +45,14 @@ const ModalWrapper = p => {
   const modal = createRef()
   const [ready, setReady] = useState()
   useEffect(() => {
+    if (ready) return
     import('dialog-polyfill').then(polyfill => {
       const self = modal.current
       polyfill.default.registerDialog(self)
     })
     .catch(err => console.warn(`dialog-polyfill was not loaded`))
     .finally(() => setReady(true))
-  }, [])
+  }, [modal, ready])
   return <ModalBase {...p} ready={ready} ref={modal} />
 }
 
