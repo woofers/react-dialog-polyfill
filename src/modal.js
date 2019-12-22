@@ -45,9 +45,9 @@ const ModalWrapper = p => {
   const modal = createRef()
   const [ready, setReady] = useState()
   useEffect(() => {
-    if (ready) return
+    const self = modal.current
+    if (ready || !self) return
     import('dialog-polyfill').then(polyfill => {
-      const self = modal.current
       polyfill.default.registerDialog(self)
     })
     .catch(err => console.warn(`dialog-polyfill was not loaded`))
