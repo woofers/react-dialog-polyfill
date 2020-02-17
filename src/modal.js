@@ -47,11 +47,13 @@ const ModalWrapper = p => {
   useEffect(() => {
     const self = modal.current
     if (ready || !self) return
+    const subscribed = true;
     import('dialog-polyfill').then(polyfill => {
       polyfill.default.registerDialog(self)
     })
     .catch(err => console.warn(`dialog-polyfill was not loaded`))
-    .finally(() => setReady(true))
+    .finally(() => { if (subscribed) setReady(true) })
+    return () => subscribed = false
   }, [modal, ready])
   return <ModalBase {...p} ready={ready} ref={modal} />
 }
