@@ -47,7 +47,7 @@ const ModalWrapper = p => {
   useEffect(() => {
     const self = modal.current
     if (ready || !self) return
-    const subscribed = true;
+    let subscribed = true
     import('dialog-polyfill').then(polyfill => {
       polyfill.default.registerDialog(self)
     })
