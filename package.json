@@ -1,6 +1,6 @@
 {
   "name": "react-dialog-polyfill",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "<dialog> element bundled with polyfill for React",
   "main": "lib/react-dialog-polyfill.js",
   "src": "src/modal.js",
