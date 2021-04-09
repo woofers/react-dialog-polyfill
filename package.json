@@ -1,6 +1,6 @@
 {
   "name": "react-dialog-polyfill",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "<dialog> element bundled with polyfill for React",
   "main": "lib/react-dialog-polyfill.js",
   "src": "src/modal.js",
@@ -36,22 +36,22 @@
     "react": "^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
-    "eslint": "^6.7.2",
-    "eslint-loader": "^3.0.2",
-    "eslint-plugin-react-hooks": "^2.3.0",
+    "@babel/core": "^7.13.15",
+    "@babel/eslint-parser": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.23.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-webpack-plugin": "^2.5.3",
     "peer-deps-externals-webpack-plugin": "^1.0.4",
-    "rimraf": "^3.0.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.5",
-    "webpack-node-externals": "^1.7.2"
+    "rimraf": "^3.0.2",
+    "webpack": "^5.31.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
-    "dialog-polyfill": "^0.5.0"
+    "dialog-polyfill": "^0.5.6"
   }
 }
