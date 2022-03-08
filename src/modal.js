@@ -1,4 +1,10 @@
 import React, { forwardRef, createRef, useEffect, useState } from 'react'
+import useInjectStyle from './use-inject-style'
+
+const style =
+  `dialog:not([open])` + `{` +
+    `display: none;` +
+  `}`
 
 const ModalBase = forwardRef((p, modal) => {
   const {
@@ -10,6 +16,7 @@ const ModalBase = forwardRef((p, modal) => {
     useAsModal,
     ...rest
   } = p
+  useInjectStyle(style)
   useEffect(() => {
     const self = modal.current
     if (!self || !ready || self.open === open) return
