@@ -1,14 +1,9 @@
 import { useEffect } from 'react'
 import { hasSupport } from './util'
+import css from './styles'
 
 let uses = 0
 const id = '_rdp'
-
-// prettier-ignore
-const css =
-  `dialog:not([open])` + `{` +
-    `display: none;` +
-  `}`
 
 const hasDoc = () => typeof document !== 'undefined' && document.head
 
