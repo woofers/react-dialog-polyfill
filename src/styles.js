@@ -36,6 +36,4 @@ const backdrop =
     'background: rgba(0,0,0,0.1);' +
   '}'
 
-const css = `${main} ${hide} ${backdrop}`
-
-export default css
+export const css = `${main} ${hide} ${backdrop}`
