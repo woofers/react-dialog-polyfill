@@ -1,21 +1,14 @@
 import React, { forwardRef, createRef, useEffect, useState } from 'react'
 import useInjectStyle from './use-inject-style'
 
+// prettier-ignore
 const style =
   `dialog:not([open])` + `{` +
     `display: none;` +
   `}`
 
 const ModalBase = forwardRef((p, modal) => {
-  const {
-    children,
-    open,
-    ready,
-    onCancel,
-    onClose,
-    useAsModal,
-    ...rest
-  } = p
+  const { children, open, ready, onCancel, onClose, useAsModal, ...rest } = p
   useInjectStyle(style)
   useEffect(() => {
     const self = modal.current
@@ -33,11 +26,7 @@ const ModalBase = forwardRef((p, modal) => {
     onClose(e, modal.current)
   }
   return (
-    <dialog {...rest}
-     ref={modal}
-     onCancel={onCancelWrap}
-     onClose={onCloseWrap}
-    >
+    <dialog {...rest} ref={modal} onCancel={onCancelWrap} onClose={onCloseWrap}>
       {children}
     </dialog>
   )
@@ -48,6 +37,16 @@ ModalBase.defaultProps = {
   onCancel: () => {}
 }
 
+const hasSupport = () => {
+  if (typeof window === 'undefined') return false
+  return !!window.HTMLDialogElement
+}
+
+const loadPolyfill = () => {
+  if (hasSupport()) return Promise.resolve()
+  return import('dialog-polyfill')
+}
+
 const ModalWrapper = p => {
   const modal = createRef()
   const [ready, setReady] = useState()
@@ -55,12 +54,20 @@ const ModalWrapper = p => {
     const self = modal.current
     if (ready || !self) return
     let subscribed = true
-    import('dialog-polyfill').then(polyfill => {
-      polyfill.default.registerDialog(self)
-    })
-    .catch(err => console.warn(`dialog-polyfill was not loaded`))
-    .finally(() => { if (subscribed) setReady(true) })
-    return () => subscribed = false
+    loadPolyfill()
+      .then(polyfill => {
+        if (!polyfill) return
+        polyfill.default.registerDialog(self)
+      })
+      .catch(err => {
+        if (__isDev__) {
+          console.warn(`dialog-polyfill could not be loaded`, err)
+        }
+      })
+      .finally(() => {
+        if (subscribed) setReady(true)
+      })
+    return () => (subscribed = false)
   }, [modal, ready])
   return <ModalBase {...p} ready={ready} ref={modal} />
 }

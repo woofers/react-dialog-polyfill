@@ -21,4 +21,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-lib
+lib/index.d.ts
+lib/react-dialog-polyfill.dev.js
+lib/react-dialog-polyfill.js
+lib/react-dialog-polyfill.module.dev.js
+lib/react-dialog-polyfill.module.js

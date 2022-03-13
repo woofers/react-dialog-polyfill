@@ -2,8 +2,11 @@
   "name": "react-dialog-polyfill",
   "version": "1.0.6",
   "description": "<dialog> element bundled with polyfill for React",
-  "main": "lib/react-dialog-polyfill.js",
-  "src": "src/modal.js",
+  "main": "lib/index.js",
+  "module": "lib/index.module.js",
+  "sideEffects": false,
+  "src": "src/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "package.json",
@@ -11,11 +14,15 @@
     "README.md"
   ],
   "scripts": {
-    "start": "yarn watch",
-    "build": "NODE_ENV=production webpack",
-    "watch": "NODE_ENV=development webpack --watch",
-    "clean": "rimraf lib",
-    "test": "echo \"No tests \" && exit 0"
+    "test": "echo \"No tests \" && exit 0",
+    "build:module": "microbundle --no-pkg-main --no-sourcemap --no-generateTypes --jsx React.createElement --define __isDev__=false -i src/index.js -o lib/react-dialog-polyfill.module.js -f es",
+    "build:umd": "microbundle --no-pkg-main --no-sourcemap --no-generateTypes --jsx React.createElement --define __isDev__=false -i src/index.js -o lib/react-dialog-polyfill.js -f umd",
+    "build:dev:module": "microbundle --no-pkg-main --no-sourcemap --no-generateTypes --jsx React.createElement --define __isDev__=true -i src/index.js -o lib/react-dialog-polyfill.module.dev.js -f es",
+    "build:dev:umd": "microbundle --no-pkg-main --no-sourcemap --no-generateTypes --jsx React.createElement --define __isDev__=true -i src/index.js -o lib/react-dialog-polyfill.dev.js -f umd",
+    "build:types": "cp src/index.d.ts lib/index.d.ts",
+    "clean": "rimraf lib/react-dialog-polyfill.dev.js lib/react-dialog-polyfill.js lib/react-dialog-polyfill.module.dev.js lib/react-dialog-polyfill.module.js lib/index.d.ts",
+    "build": "yarn build:dev:module && yarn build:dev:umd && yarn build:module && yarn build:umd && yarn build:types",
+    "format": "prettier --write \"{src,tests}/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -36,20 +43,12 @@
     "react": "^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/eslint-parser": "^7.17.0",
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
-    "babel-loader": "^8.2.3",
     "eslint": "^8.10.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-webpack-plugin": "^3.1.1",
-    "peer-deps-externals-webpack-plugin": "^1.0.4",
-    "rimraf": "^3.0.2",
-    "webpack": "^5.70.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-node-externals": "^3.0.0"
+    "microbundle": "^0.14.2",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2"
   },
   "dependencies": {
     "dialog-polyfill": "^0.5.6"
