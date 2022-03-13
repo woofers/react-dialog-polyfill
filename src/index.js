@@ -2,15 +2,9 @@ import React, { forwardRef, createRef, useEffect, useState } from 'react'
 import useInjectStyle from './use-inject-style'
 import { hasSupport } from './util'
 
-// prettier-ignore
-const style =
-  `dialog:not([open])` + `{` +
-    `display: none;` +
-  `}`
-
 const ModalBase = forwardRef((p, modal) => {
   const { children, open, _rd, onCancel, onClose, _md, ...rest } = p
-  useInjectStyle(style)
+  useInjectStyle()
   useEffect(() => {
     const self = modal.current
     if (!self || !_rd || self.open === open) return

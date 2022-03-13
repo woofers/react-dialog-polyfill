@@ -4,7 +4,7 @@
   "description": "<dialog> element bundled with polyfill for React",
   "main": "lib/index.js",
   "module": "lib/index.module.js",
-  "sideEffects": false,
+  "sideEffects": ["./src/use-inject-style.js"],
   "src": "src/index.js",
   "types": "lib/index.d.ts",
   "files": [

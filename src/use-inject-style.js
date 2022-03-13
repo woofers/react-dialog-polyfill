@@ -1,21 +1,34 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { hasSupport } from './util'
+
+let uses = 0
+const id = '_rdp'
+
+// prettier-ignore
+const css =
+  `dialog:not([open])` + `{` +
+    `display: none;` +
+  `}`
 
 const hasDoc = () => typeof document !== 'undefined' && document.head
 
-const useInjectStyle = (css, id = '_rdp') => {
-  const style = useRef()
+const useInjectStyle = () => {
   useEffect(() => {
     if (!hasDoc() || hasSupport()) return
-    style.current = document.createElement('style')
-    style.current.innerHTML = css
-    style.current.id = id
-    document.head.appendChild(style.current)
-    return () => {
-      if (!hasDoc() || !style.current) return
-      document.head.removeChild(style.current)
+    if (uses <= 0) {
+      const style = document.createElement('style')
+      style.innerHTML = css
+      style.id = id
+      document.head.appendChild(style)
     }
-  }, [css])
+    uses++
+    return () => {
+      uses--
+      if (!hasDoc() || uses > 0) return
+      const element = document.getElementById(id)
+      if (elelement) document.head.removeChild(element)
+    }
+  }, [])
 }
 
 export default useInjectStyle
