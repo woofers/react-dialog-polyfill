@@ -26,7 +26,7 @@ const useInjectStyle = () => {
       uses--
       if (!hasDoc() || uses > 0) return
       const element = document.getElementById(id)
-      if (elelement) document.head.removeChild(element)
+      if (element) document.head.removeChild(element)
     }
   }, [])
 }
