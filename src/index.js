@@ -1,5 +1,6 @@
 import React, { forwardRef, createRef, useEffect, useState } from 'react'
 import useInjectStyle from './use-inject-style'
+import { hasSupport } from './util'
 
 // prettier-ignore
 const style =
@@ -8,16 +9,16 @@ const style =
   `}`
 
 const ModalBase = forwardRef((p, modal) => {
-  const { children, open, ready, onCancel, onClose, useAsModal, ...rest } = p
+  const { children, open, _ready, onCancel, onClose, _useAsModal, ...rest } = p
   useInjectStyle(style)
   useEffect(() => {
     const self = modal.current
-    if (!self || !ready || self.open === open) return
-    const show = useAsModal ? () => self.showModal() : () => self.show()
+    if (!self || !_ready || self.open === open) return
+    const show = _useAsModal ? () => self.showModal() : () => self.show()
     const close = () => self.close()
     const action = open ? show : close
     action()
-  }, [ready, open, modal, useAsModal])
+  }, [_ready, open, modal, _useAsModal])
   const onCancelWrap = e => {
     e.preventDefault()
     onCancel(e, modal.current)
@@ -37,11 +38,6 @@ ModalBase.defaultProps = {
   onCancel: () => {}
 }
 
-const hasSupport = () => {
-  if (typeof window === 'undefined') return false
-  return !!window.HTMLDialogElement
-}
-
 const loadPolyfill = () => {
   if (hasSupport()) return Promise.resolve()
   return import('dialog-polyfill')
@@ -49,10 +45,10 @@ const loadPolyfill = () => {
 
 const ModalWrapper = p => {
   const modal = createRef()
-  const [ready, setReady] = useState()
+  const [_ready, setReady] = useState()
   useEffect(() => {
     const self = modal.current
-    if (ready || !self) return
+    if (_ready || !self) return
     let subscribed = true
     loadPolyfill()
       .then(polyfill => {
@@ -68,10 +64,10 @@ const ModalWrapper = p => {
         if (subscribed) setReady(true)
       })
     return () => (subscribed = false)
-  }, [modal, ready])
-  return <ModalBase {...p} ready={ready} ref={modal} />
+  }, [modal, _ready])
+  return <ModalBase {...p} _ready={_ready} ref={modal} />
 }
 
-export const Modal = p => <ModalWrapper {...p} useAsModal={true} />
+export const Modal = p => <ModalWrapper {...p} _useAsModal={true} />
 
-export const Dialog = p => <ModalWrapper {...p} useAsModal={false} />
+export const Dialog = p => <ModalWrapper {...p} _useAsModal={false} />
