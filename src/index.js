@@ -9,16 +9,16 @@ const style =
   `}`
 
 const ModalBase = forwardRef((p, modal) => {
-  const { children, open, _ready, onCancel, onClose, _useAsModal, ...rest } = p
+  const { children, open, _rd, onCancel, onClose, _md, ...rest } = p
   useInjectStyle(style)
   useEffect(() => {
     const self = modal.current
-    if (!self || !_ready || self.open === open) return
-    const show = _useAsModal ? () => self.showModal() : () => self.show()
+    if (!self || !_rd || self.open === open) return
+    const show = _md ? () => self.showModal() : () => self.show()
     const close = () => self.close()
     const action = open ? show : close
     action()
-  }, [_ready, open, modal, _useAsModal])
+  }, [_rd, open, modal, _md])
   const onCancelWrap = e => {
     e.preventDefault()
     onCancel(e, modal.current)
@@ -45,10 +45,10 @@ const loadPolyfill = () => {
 
 const ModalWrapper = p => {
   const modal = createRef()
-  const [_ready, setReady] = useState()
+  const [_rd, setReady] = useState()
   useEffect(() => {
     const self = modal.current
-    if (_ready || !self) return
+    if (_rd || !self) return
     let subscribed = true
     loadPolyfill()
       .then(polyfill => {
@@ -64,10 +64,10 @@ const ModalWrapper = p => {
         if (subscribed) setReady(true)
       })
     return () => (subscribed = false)
-  }, [modal, _ready])
-  return <ModalBase {...p} _ready={_ready} ref={modal} />
+  }, [modal, _rd])
+  return <ModalBase {...p} _rd={_rd} ref={modal} />
 }
 
-export const Modal = p => <ModalWrapper {...p} _useAsModal={true} />
+export const Modal = p => <ModalWrapper {...p} _md={true} />
 
-export const Dialog = p => <ModalWrapper {...p} _useAsModal={false} />
+export const Dialog = p => <ModalWrapper {...p} _md={false} />
