@@ -2,8 +2,14 @@ import React, { forwardRef, createRef, useEffect, useState } from 'react'
 import useInjectStyle from './use-inject-style'
 import { hasSupport } from './util'
 
+const style = {
+  position: 'fixed',
+  top: '50%',
+  transform: 'translate(0, -50%)'
+}
+
 const ModalBase = forwardRef((p, modal) => {
-  const { children, open, _rd, onCancel, onClose, _md, ...rest } = p
+  const { children, open, _rd, onCancel, onClose, _md, fixed, ...rest } = p
   useInjectStyle()
   useEffect(() => {
     const self = modal.current
@@ -21,7 +27,13 @@ const ModalBase = forwardRef((p, modal) => {
     onClose(e, modal.current)
   }
   return (
-    <dialog {...rest} ref={modal} onCancel={onCancelWrap} onClose={onCloseWrap}>
+    <dialog
+      {...rest}
+      ref={modal}
+      onCancel={onCancelWrap}
+      onClose={onCloseWrap}
+      style={fixed ? style : undefined}
+    >
       {children}
     </dialog>
   )
@@ -29,7 +41,8 @@ const ModalBase = forwardRef((p, modal) => {
 
 ModalBase.defaultProps = {
   onClose: () => {},
-  onCancel: () => {}
+  onCancel: () => {},
+  fixed: false
 }
 
 const loadPolyfill = () => {
@@ -62,6 +75,6 @@ const ModalWrapper = p => {
   return <ModalBase {...p} _rd={_rd} ref={modal} />
 }
 
-export const Modal = p => <ModalWrapper {...p} _md={true} />
+export const Modal = ({ fixed = true, ...p }) => <ModalWrapper {...p} fixed={fixed} _md={true} />
 
-export const Dialog = p => <ModalWrapper {...p} _md={false} />
+export const Dialog = p => <ModalWrapper {...p} _md={false} fixed={false} />

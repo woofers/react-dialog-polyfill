@@ -1,4 +1,3 @@
-
 // prettier-ignore
 const main =
   'dialog' + '{' +

@@ -88,7 +88,6 @@ The Modal component will block interaction with other elements when it is open, 
 
 `open` indicates if the modal is open. **Default:** `false`
 
-
 ### On Close
 
 `onClose` runs when the modal is explicitly closed. **Default:** `(event, modal) => {}`
@@ -105,3 +104,7 @@ This means that having `onCancel={() => setModal(false)}` will call `onClose` fr
 By default the modal itself will not close as `open` will still be set however the event will trigger.
 
 It is recommended to set `onCancel={() => setModal(false)}` to have the modal close when `Escape` is pressed.
+
+### Fixed (Modal only)
+
+`fixed` indicates if the modal is fixed on scrolling or absolute. **Default:** `false`
