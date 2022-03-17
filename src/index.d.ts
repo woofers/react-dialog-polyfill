@@ -12,7 +12,7 @@ export interface HTMLDialog extends HTMLDialogBase {
   showModal(): void
 }
 
-type Callback = (e?: Event, m?: HTMLDialog) => void
+type Callback = (e: Event, m: HTMLDialog) => void
 
 interface DialogProps extends HTMLProps<HTMLDialogBase> {
   children?: React.ReactNode
