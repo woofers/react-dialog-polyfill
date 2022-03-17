@@ -1,12 +1,29 @@
-import React, { Props, Component, HTMLProps } from 'react'
+import React, { Component, HTMLProps } from 'react'
 
-type Callback = (e: Event, m: HTMLDialogElement) => void
+// Might need to replace this with HTMLElement at some point
+// as HTMLDialogElement is not widely supported and is now deprecated
+type HTMLDialogBase = HTMLDialogElement
 
-interface DialogProps extends HTMLProps<HTMLDialogElement> {
-  children?: React.ReactNode
-  onCancel: Callback
-  onClose: Callback
+export interface HTMLDialog extends HTMLDialogBase {
+  open: boolean
+  returnValue: string
+  close(returnValue?: string): void
+  show(): void
+  showModal(): void
 }
 
-export type Dialog = React.FC<DialogProps>
-export type Modal = React.FC<DialogProps>
+type Callback = (e?: Event, m?: HTMLDialog) => void
+
+interface DialogProps extends HTMLProps<HTMLDialogBase> {
+  children?: React.ReactNode
+  onClose?: Callback
+}
+
+interface ModalProps extends DialogProps {
+  onCancel?: Callback
+}
+
+declare const Dialog: React.FC<DialogProps>
+declare const Modal: React.FC<ModalProps>
+
+export { Dialog, Modal }
