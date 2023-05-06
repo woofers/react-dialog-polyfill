@@ -26,12 +26,15 @@ Differences from most of the existing components:
 
 **Yarn**
 
-    yarn add react-dialog-polyfill
+```yarn
+yarn add react-dialog-polyfill
+```
 
 **npm**
 
-    npm install react-dialog-polyfill
-
+```npm
+npm install react-dialog-polyfill
+```
 
 # Usage
 
