@@ -1,6 +1,6 @@
 {
   "name": "react-dialog-polyfill",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "<dialog> element bundled with polyfill for React",
   "main": "lib/index.js",
   "module": "lib/index.module.js",
@@ -46,7 +46,7 @@
   ],
   "homepage": "https://github.com/woofers/react-dialog-polyfill#readme",
   "peerDependencies": {
-    "react": "^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0"
+    "react": "^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "eslint": "^8.25.0",
