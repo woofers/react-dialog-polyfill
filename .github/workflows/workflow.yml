@@ -7,24 +7,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
-      uses: actions/checkout@v1
+      uses: actions/checkout@v4
     - name: Use Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '22'
         registry-url: 'https://registry.npmjs.org'
+    - name: Use PNPM
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9.4.0
     - name: Deploy Info
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
     - name: Install
-      run: yarn install
+      run: pnpm install
     - name: Build
-      run: yarn build
+      run: pnpm build
     - name: Test
-      run: yarn test
+      run: pnpm test
     - name: Publish
       if: startsWith(github.ref, 'refs/tags/')
-      run: yarn publish --access public
+      run: pnpm package
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

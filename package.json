@@ -1,6 +1,6 @@
 {
   "name": "react-dialog-polyfill",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "<dialog> element bundled with polyfill for React",
   "main": "lib/index.js",
   "module": "lib/index.module.js",
@@ -23,8 +23,9 @@
     "build:dev:umd": "microbundle --no-pkg-main --no-sourcemap --no-generateTypes --jsx React.createElement --define __isDev__=true -i src/index.js -o lib/react-dialog-polyfill.dev.js -f umd",
     "build:types": "cp src/index.d.ts lib/index.d.ts",
     "clean": "rimraf lib/react-dialog-polyfill.dev.js lib/react-dialog-polyfill.js lib/react-dialog-polyfill.module.dev.js lib/react-dialog-polyfill.module.js lib/index.d.ts",
-    "build": "yarn build:dev:module && yarn build:dev:umd && yarn build:module && yarn build:umd && yarn build:types",
-    "format": "prettier --write \"{src,tests}/**/*.js\""
+    "build": "pnpm build:dev:module && pnpm build:dev:umd && pnpm build:module && pnpm build:umd && pnpm build:types",
+    "format": "prettier --write \"{src,tests}/**/*.js\"",
+    "package": "pnpm publish --no-git-checks --access public"
   },
   "repository": {
     "type": "git",
@@ -46,15 +47,15 @@
   ],
   "homepage": "https://github.com/woofers/react-dialog-polyfill#readme",
   "peerDependencies": {
-    "react": "^0.13.0 || ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0"
+    "react": "^0.13.0 || ^0.14.0 || >=15"
   },
   "devDependencies": {
-    "eslint": "^8.25.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-webpack-plugin": "^3.2.0",
+    "eslint": "^9.6.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-webpack-plugin": "^4.2.0",
     "microbundle": "^0.15.1",
-    "prettier": "^2.7.1",
-    "rimraf": "^3.0.2"
+    "prettier": "^3.3.2",
+    "rimraf": "^5.0.8"
   },
   "dependencies": {
     "dialog-polyfill": "^0.5.6"

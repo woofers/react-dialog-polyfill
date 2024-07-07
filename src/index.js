@@ -2,35 +2,37 @@ import React, { forwardRef, createRef, useEffect, useState } from 'react'
 import useInjectStyle from './use-inject-style'
 import { hasSupport } from './util'
 
-const ModalBase = forwardRef((p, modal) => {
-  const { children, open, _rd, onCancel, onClose, _md, ...rest } = p
-  useInjectStyle()
-  useEffect(() => {
-    const self = modal.current
-    if (!self || !_rd || self.open === open) return
-    const show = _md ? () => self.showModal() : () => self.show()
-    const close = () => self.close()
-    const action = open ? show : close
-    action()
-  }, [_rd, open, modal, _md])
-  const onCancelWrap = e => {
-    e.preventDefault()
-    onCancel(e, modal.current)
+const ModalBase = forwardRef(
+  ({ onClose = () => {}, onCancel = () => {}, ...p }, modal) => {
+    const { children, open, _rd, _md, ...rest } = p
+    useInjectStyle()
+    useEffect(() => {
+      const self = modal.current
+      if (!self || !_rd || self.open === open) return
+      const show = _md ? () => self.showModal() : () => self.show()
+      const close = () => self.close()
+      const action = open ? show : close
+      action()
+    }, [_rd, open, modal, _md])
+    const onCancelWrap = e => {
+      e.preventDefault()
+      onCancel(e, modal.current)
+    }
+    const onCloseWrap = e => {
+      onClose(e, modal.current)
+    }
+    return (
+      <dialog
+        {...rest}
+        ref={modal}
+        onCancel={onCancelWrap}
+        onClose={onCloseWrap}
+      >
+        {children}
+      </dialog>
+    )
   }
-  const onCloseWrap = e => {
-    onClose(e, modal.current)
-  }
-  return (
-    <dialog {...rest} ref={modal} onCancel={onCancelWrap} onClose={onCloseWrap}>
-      {children}
-    </dialog>
-  )
-})
-
-ModalBase.defaultProps = {
-  onClose: () => {},
-  onCancel: () => {}
-}
+)
 
 const loadPolyfill = () => {
   if (hasSupport()) return Promise.resolve()
