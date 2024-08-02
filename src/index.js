@@ -1,6 +1,36 @@
 import React, { forwardRef, createRef, useEffect, useState } from 'react'
-import useInjectStyle from './use-inject-style'
-import { hasSupport } from './util'
+
+const hasSupport = () =>
+  typeof window !== 'undefined' && !!window.HTMLDialogElement
+const hasDoc = () => typeof document !== 'undefined' && document.head
+
+let uses = 0
+const id = '_rdp'
+
+// prettier-ignore
+const css =
+  `dialog:not([open])` + `{` +
+    `display: none;` +
+  `}`
+
+const useInjectStyle = () => {
+  useEffect(() => {
+    if (!hasDoc() || hasSupport()) return
+    if (uses <= 0) {
+      const style = document.createElement('style')
+      style.innerHTML = css
+      style.id = id
+      document.head.appendChild(style)
+    }
+    uses++
+    return () => {
+      uses--
+      if (!hasDoc() || uses > 0) return
+      const element = document.getElementById(id)
+      if (element) document.head.removeChild(element)
+    }
+  }, [])
+}
 
 const ModalBase = forwardRef(
   ({ onClose = () => {}, onCancel = () => {}, ...p }, modal) => {
@@ -34,10 +64,8 @@ const ModalBase = forwardRef(
   }
 )
 
-const loadPolyfill = () => {
-  if (hasSupport()) return Promise.resolve()
-  return import('dialog-polyfill')
-}
+const loadPolyfill = () =>
+  hasSupport() ? Promise.resolve() : import('dialog-polyfill')
 
 const ModalWrapper = p => {
   const modal = createRef()
