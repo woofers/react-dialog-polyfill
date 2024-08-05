@@ -25,7 +25,7 @@
     "clean": "rimraf lib/react-dialog-polyfill.dev.js lib/react-dialog-polyfill.js lib/react-dialog-polyfill.module.dev.js lib/react-dialog-polyfill.module.js lib/index.d.ts",
     "build": "pnpm build:dev:module && pnpm build:dev:umd && pnpm build:module && pnpm build:umd && pnpm build:types",
     "format": "biome format --write ./src",
-    "package": "pnpm publish --no-git-checks --access public", 
+    "package": "pnpm publish --no-git-checks --access public",
     "lint": "biome lint"
   },
   "repository": {
@@ -52,8 +52,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "microbundle": "^0.15.1",
-    "rimraf": "^5.0.8"
+    "microbundle": "0.15.1",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "dialog-polyfill": "^0.5.6"

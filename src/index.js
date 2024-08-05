@@ -33,8 +33,18 @@ const useInjectStyle = () => {
 }
 
 const ModalBase = forwardRef(
-  ({ onClose = () => {}, onCancel = () => {}, ...p }, modal) => {
-    const { children, open, _rd, _md, ...rest } = p
+  (
+    {
+      onClose = () => {},
+      onCancel = () => {},
+      children,
+      open,
+      _rd,
+      _md,
+      ...rest
+    },
+    modal
+  ) => {
     useInjectStyle()
     useEffect(() => {
       const self = modal.current
@@ -53,10 +63,11 @@ const ModalBase = forwardRef(
     }
     return (
       <dialog
-        {...rest}
-        ref={modal}
-        onCancel={onCancelWrap}
-        onClose={onCloseWrap}
+        {...Object.assign({}, rest, {
+          onCancel: onCancelWrap,
+          onClose: onCloseWrap,
+          ref: modal
+        })}
       >
         {children}
       </dialog>
@@ -89,9 +100,13 @@ const ModalWrapper = p => {
       })
     return () => (subscribed = false)
   }, [modal, _rd])
-  return <ModalBase {...p} _rd={_rd} ref={modal} />
+  return <ModalBase {...Object.assign({}, p, { _rd, ref: modal })} />
 }
 
-export const Modal = p => <ModalWrapper {...p} _md={true} />
+export const Modal = p => (
+  <ModalWrapper {...Object.assign({}, p, { _md: true })} />
+)
 
-export const Dialog = p => <ModalWrapper {...p} _md={false} />
+export const Dialog = p => (
+  <ModalWrapper {...Object.assign({}, p, { _md: false })} />
+)
