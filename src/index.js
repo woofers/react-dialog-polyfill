@@ -7,7 +7,7 @@ const hasDoc = () => typeof document !== 'undefined' && document.head
 let uses = 0
 const id = '_rdp'
 
-// prettier-ignore
+// biome-ignore format: Keeps CSS formatted
 const css =
   `dialog:not([open])` + `{` +
     `display: none;` +
